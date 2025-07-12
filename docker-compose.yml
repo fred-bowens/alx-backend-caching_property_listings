@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: alx_postgres
+    environment:
+      POSTGRES_DB: alx_db
+      POSTGRES_USER: alx_user
+      POSTGRES_PASSWORD: alx_pass
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:latest
+    container_name: alx_redis
+    ports:
+      - "6379:6379"
