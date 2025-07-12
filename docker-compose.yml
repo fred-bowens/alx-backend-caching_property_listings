@@ -16,3 +16,14 @@ services:
     container_name: alx_redis
     ports:
       - "6379:6379"
+
+      DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'alx_property',
+        'USER': 'alx_user',
+        'PASSWORD': 'alx_password',
+        'HOST': 'localhost',  # or 'postgres' if running Django in Docker
+        'PORT': '5432',
+    }
+}
