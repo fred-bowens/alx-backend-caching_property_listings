@@ -3,6 +3,25 @@ from django_redis import get_redis_connection
 
 logger = logging.getLogger(__name__)  # Get Django's logger for this module
 
+def get_all_properties():
+    """
+    Get all properties, using Redis cache to reduce DB hits.
+    Cache timeout is 1 hour (3600 seconds).
+    """
+
+    # Try to fetch cached data
+    properties = cache.get('all_properties')
+
+    if properties is None:
+        # If not in cache, query the database
+        queryset = Property.objects.all().values()  # Get all properties as dicts
+        properties = list(queryset)  # Convert queryset to list of dictionaries
+
+        # Store in Redis with 1-hour expiration (3600 seconds)
+        cache.set('all_properties', properties, timeout=3600)
+
+    return properties
+
 def get_redis_cache_metrics():
     """
     Retrieve Redis cache hit/miss metrics and calculate the hit ratio.
